@@ -98,7 +98,7 @@
   <script setup lang="ts">
   import { ref, onMounted, watch } from 'vue'
   import { defineProps } from 'vue'
-  import { useAdStore } from '../../sheetsCRUD/stores/adStore'
+  import { useAdStore } from '../stores/AdStore'
   
   const props = defineProps<{ sheetId: string }>()
   
