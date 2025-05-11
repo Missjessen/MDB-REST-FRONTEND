@@ -35,6 +35,8 @@ export class GooglePickerService {
     this.accessToken = token
   }
 
+  
+
   // Åbner Picker med Sheets
   public showPicker() {
     if (!this.accessToken) {
