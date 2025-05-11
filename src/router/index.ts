@@ -1,10 +1,16 @@
 // src/router/index.ts
 import { createRouter, createWebHistory, type RouteLocationNormalized, type NavigationGuardNext } from 'vue-router'
 import { useAuthStore } from '@/modules/auth/store'
+import CallbackView from '@/views/auth/CallbackView.vue'
 
 const routes = [
   { path: '/login',         component: () => import('@/views/auth/LoginView.vue') },
   { path: '/auth/callback', component: () => import('@/views/auth/CallbackView.vue') },
+  {
+    path: '/auth/callback',
+    component: CallbackView,
+    alias: '/auth/google/callback'
+  },
   //{ path: '/',            component: () => import('@/views/HomeView.vue')},
   { path: '/about',         component: () => import('@/views/AboutView.vue') }, // Tilføjet About route
   { path: '/sheets',        component: () => import('@/modules/sheets/pages/SheetListPage.vue'),   meta: { requiresAuth: true } },
