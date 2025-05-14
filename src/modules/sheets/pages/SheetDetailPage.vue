@@ -30,13 +30,14 @@
       </div>
 
       <div v-if="activeTab === 'campaigns'">
-        <CampaignEditor :sheetId="sheet.sheetId" />
+        <CampaignEditor :sheetId="sheet.sheetId || sheet._id" />
+
       </div>
       <div v-if="activeTab === 'ads'">
-        <AdEditor :sheetId="sheet.sheetId" />
+        <AdEditor :sheetId="sheet.sheetId || sheet._id" />
       </div>
       <div v-if="activeTab === 'keywords'">
-        <KeywordEditor :sheetId="sheet.sheetId" />
+        <KeywordEditor sheetId="sheet.sheetId || sheet._id" />
       </div>
     </div>
   </div>

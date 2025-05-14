@@ -7,12 +7,17 @@ import { useAuthStore } from '@/modules/auth/store'
 import axios           from 'axios'
 
 
-const app   = createApp(App)
-const pinia = createPinia()
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE;
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE
 
-app.use(pinia)   // <— først Pinia
-app.use(router)  // <— så router (der kører beforeEach)
-useAuthStore().restore()
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)       // ✅ først Pinia
+app.use(router)      // ✅ så router
+
+// ✅ nu er pinia aktiv – så restore virker korrekt
+const auth = useAuthStore()
+auth.restore()
+
 app.mount('#app')
 

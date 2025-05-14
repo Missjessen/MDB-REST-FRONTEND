@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/sheets',
     component: () => import('@/modules/sheets/pages/SheetListPage.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true }, props: true
   },
   {
     path: '/sheets/:id',

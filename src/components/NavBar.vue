@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white dark:bg-gray-900 shadow-sm">
+  <header class="relative z-50 bg-white dark:bg-gray-900 shadow-sm">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <!-- Logo -->
@@ -9,18 +9,30 @@
           </RouterLink>
         </div>
 
-        <!-- Navigation links -->
+        <!-- Navigation links + profile dropdown -->
         <div class="md:flex md:items-center md:gap-12">
           <nav aria-label="Main navigation" class="hidden md:block">
             <ul class="flex items-center gap-6 text-sm">
-              <li><RouterLink to="/about" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">About</RouterLink></li>
-              <li><RouterLink to="/sheets" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">Sheets</RouterLink></li>
-              <li><RouterLink to="/projects" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">Projects</RouterLink></li>
+              <li>
+                <RouterLink to="/about" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">
+                  About
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/sheets" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">
+                  Sheets
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/projects" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">
+                  Projects
+                </RouterLink>
+              </li>
             </ul>
           </nav>
 
           <!-- Profile / Login -->
-          <div class="ml-6 relative" ref="dropdownRef">
+          <div class="ml-6 relative overflow-visible" ref="dropdownRef">
             <!-- If logged in -->
             <div v-if="auth.isLoggedIn">
               <button
@@ -39,15 +51,19 @@
               <!-- Dropdown -->
               <div
                 v-if="showDropdown"
-                class="absolute right-0 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                class="absolute right-0 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900 z-50"
                 role="menu"
               >
                 <div class="p-2">
                   <p class="px-4 py-2 text-sm font-semibold text-gray-700 dark:text-white">
                     {{ auth.user?.name }}
                   </p>
-                  <RouterLink to="/profile" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">My profile</RouterLink>
-                  <RouterLink to="/settings" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">Settings</RouterLink>
+                  <RouterLink to="/profile" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
+                    My profile
+                  </RouterLink>
+                  <RouterLink to="/settings" class="block px-4 py-2 text-sm text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
+                    Settings
+                  </RouterLink>
                   <button
                     @click="handleLogout"
                     class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-600/10 rounded-md"
@@ -74,13 +90,11 @@
   </header>
 </template>
 
-
 <script lang="ts">
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../modules/auth/store'
 import { RouterLink } from 'vue-router'
-
 
 export default defineComponent({
   name: 'NavBar',
@@ -133,3 +147,7 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+/* Ingen overflow eller z-index-styles her, da det håndteres via Tailwind-classes */
+</style>

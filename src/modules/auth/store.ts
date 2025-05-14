@@ -3,61 +3,73 @@ import { defineStore } from 'pinia'
 import { authApi } from './api'
 import type { IUser } from './interfaces'
 import { AuthService } from './services/AuthService'
+import { apiClient } from './api'
 
 const authService = new AuthService()
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null as IUser | null,
-    token: '' as string,
-    accessToken: '' as string, // ← til Google Picker
+    token: localStorage.getItem('auth-token') || '',
+    accessToken: '' as string // ← til fx Google Picker
   }),
 
   getters: {
-    isLoggedIn: (state) =>
-      !!state.token && !!state.user
+    isLoggedIn: (state) => !!state.token && !!state.user
   },
 
   actions: {
-    // Starter login-flow ved redirect til Google
+    // 🌐 Starter Google login flow
     login() {
       authService.loginWithGoogle()
     },
 
-    // Kaldes fra frontend efter redirect fra Google
+    // ✅ Håndter callback efter redirect fra Google
     async handleCallback(code: string) {
-      const res = await authApi.get('/google/callback', { params: { code } })
-      const { token, user, accessToken } = res.data
-    
-      this.token = token
+      const { token, user, accessToken } = await authService.handleCallback(code)
+
       this.user = user
       this.accessToken = accessToken
-    
+      this.setToken(token)
+    },
+
+    // ✅ Bruges efter refresh/redirect for at hente brugerinfo
+    async fetchMe() {
+      try {
+        const user = await authService.fetchMe()
+        this.user = user
+        this.setToken(this.token)
+      } catch (err) {
+        this.logout()
+        throw err
+      }
+    },
+
+    // ✅ Sætter token globalt + i localStorage
+    setToken(token: string) {
+      this.token = token
       localStorage.setItem('auth-token', token)
+
+      apiClient.defaults.headers.common.Authorization = `Bearer ${token}`
       authApi.defaults.headers.common.Authorization = `Bearer ${token}`
     },
 
-    // Kalder /me endpoint for at hente brugerinfo
-    async fetchMe() {
-      this.user = await authService.fetchMe()
-    },
-
-    // Log ud
+    // 🧽 Ryd alt ved logout
     logout() {
       this.token = ''
       this.user = null
       this.accessToken = ''
       localStorage.removeItem('auth-token')
+      delete apiClient.defaults.headers.common.Authorization
       delete authApi.defaults.headers.common.Authorization
     },
 
-    // Kald ved opstart: sætter JWT fra localStorage
+    // 🪄 Kald ved app-start
     restore() {
       const saved = localStorage.getItem('auth-token')
       if (saved) {
-        this.token = saved
-        authApi.defaults.headers.common.Authorization = `Bearer ${saved}`
+        this.setToken(saved)
       }
     }
-  },
+  }
 })

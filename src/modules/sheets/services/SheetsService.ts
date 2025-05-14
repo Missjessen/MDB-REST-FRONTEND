@@ -1,33 +1,30 @@
-import type { Sheet } from '../interfaces/Sheet'
-import axios from 'axios'
-import { useAuthStore } from '@/modules/auth/store'
+// src/modules/sheets/services/SheetsService.ts
+import type { ISheetsService } from '../ISheetsService'
+import type { Sheet } from '../models'
+import { apiClient } from '../../auth/api'
 
-export class SheetsService {
-  getAuthHeader() {
-    const token = useAuthStore().token
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  }
-
+export class SheetsService implements ISheetsService {
   async fetchSheets(): Promise<Sheet[]> {
-    const res = await axios.get('/api/sheets', this.getAuthHeader())
-    return res.data
-  }
-
-  async fetchSheetById(id: string): Promise<Sheet> {
-    const res = await axios.get(`/api/sheets/${id}`, this.getAuthHeader())
+    const res = await apiClient.get('/sheets')
     return res.data
   }
 
   async createSheet(name: string): Promise<Sheet> {
-    const res = await axios.post('/api/sheets', { name }, this.getAuthHeader())
+    const res = await apiClient.post('/sheets', { name })
+    return res.data
+  }
+
+  async fetchSheetById(id: string): Promise<Sheet> {
+    const res = await apiClient.get(`/sheets/${id}`)
     return res.data
   }
 
   async deleteSheet(id: string): Promise<void> {
-    await axios.delete(`/api/sheets/${id}`, this.getAuthHeader())
+    await apiClient.delete(`/sheets/${id}`)
+  }
+
+  async syncDbAll(id: string): Promise<{ campaigns: number; ads: number; keywords: number }> {
+    const res = await apiClient.post(`/sheets/${id}/sync-db-all`)
+    return res.data
   }
 }

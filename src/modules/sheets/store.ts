@@ -17,15 +17,20 @@ export const useSheetsStore = defineStore('sheets', {
 
   actions: {
     async loadAll() {
-      this.loading = true
-      try {
-        this.list = await sheetsService.fetchSheets()
-      } catch (err) {
-        this.error = 'Kunne ikke hente dine ark'
-      } finally {
-        this.loading = false
-      }
-    },
+  this.loading = true
+  try {
+    const result = await sheetsService.fetchSheets()
+    console.log('✅ Hentet fra API:', result)
+
+    this.list = Array.isArray(result) ? result : [] // sikrer array-type
+  } catch (err) {
+    console.error('❌ Fejl ved hentning:', err)
+    this.error = 'Kunne ikke hente dine ark'
+    this.list = []
+  } finally {
+    this.loading = false
+  }
+},
 
     async loadById(id: string) {
       this.loading = true
@@ -41,6 +46,29 @@ export const useSheetsStore = defineStore('sheets', {
 
     setCurrent(sheet: Sheet) {
       this.current = sheet
+    },
+
+    async deleteSheet(id: string) {
+      try {
+        await sheetsService.deleteSheet(id)
+        this.list = this.list.filter(s => s._id !== id)
+      } catch (err) {
+        console.error('Kunne ikke slette sheet:', err)
+        this.error = 'Sletning mislykkedes'
+      }
+    },
+
+    async syncSheetToDb(sheet: Sheet) {
+      try {
+        const result = await sheetsService.syncDbAll(sheet._id)
+        alert(
+          `✅ Ark: ${sheet.name}\n` +
+          `Kampagner: ${result.campaigns}\nAnnoncer: ${result.ads}\nKeywords: ${result.keywords}`
+        )
+      } catch (err) {
+        console.error('Fejl under synk:', err)
+        this.error = `Synkronisering mislykkedes for ${sheet.name}`
+      }
     },
 
     async showPicker(): Promise<{ id: string; name: string } | null> {
@@ -66,7 +94,7 @@ export const useSheetsStore = defineStore('sheets', {
 
     async saveSheetMeta(sheet: { id: string; name: string }) {
       try {
-        await sheetsService.createSheet(sheet.name) // du gemmer kun name lige nu
+        await sheetsService.createSheet(sheet.name) // gemmer kun navn pt.
       } catch (err) {
         console.error('Kunne ikke gemme sheet:', err)
       }
