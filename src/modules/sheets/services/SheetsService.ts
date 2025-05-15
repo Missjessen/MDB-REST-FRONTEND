@@ -1,7 +1,7 @@
 // src/modules/sheets/services/SheetsService.ts
 import type { ISheetsService } from '../ISheetsService'
 import type { Sheet } from '../models'
-import { apiClient } from '../../auth/api'
+import { apiClient } from '@/modules/auth/api'
 
 export class SheetsService implements ISheetsService {
   async fetchSheets(): Promise<Sheet[]> {
