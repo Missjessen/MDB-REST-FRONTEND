@@ -68,8 +68,15 @@ export const useSheetsStore = defineStore('sheets', {
             .setDeveloperKey(import.meta.env.VITE_GOOGLE_API_KEY)
             .setCallback(data => {
               const doc = data.docs?.[0]
-              if (data.action === google.picker.Action.PICKED && doc) {
-                resolve({ id: doc.id, name: doc.name })
+              if (
+                data.action === google.picker.Action.PICKED &&
+                doc?.id != null &&
+                typeof doc.name === 'string'
+              ) {
+                resolve({
+                  id:   doc.id,
+                  name: doc.name    // TS ved nu at doc.name er string
+                })
               } else {
                 resolve(null)
               }
