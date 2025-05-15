@@ -23,11 +23,7 @@
                   Sheets
                 </RouterLink>
               </li>
-              <li>
-                <RouterLink to="/projects" class="text-gray-500 hover:text-blue-600 dark:text-white dark:hover:text-blue-400">
-                  Projects
-                </RouterLink>
-              </li>
+             
             </ul>
           </nav>
 

@@ -1,9 +1,7 @@
 // src/modules/sheets/ISheetsService.ts
 import type { Sheet } from './models'
 
-/**  
- * Interface for alle dine Sheets‐endpoints   
- */
+
 export interface ISheetsService {
   fetchSheets(): Promise<Sheet[]>
   createSheet(name: string): Promise<Sheet>

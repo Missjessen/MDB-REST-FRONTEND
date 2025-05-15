@@ -1,85 +1,73 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-b from-[#f5f6fa] to-[#eaeef5] text-gray-800 p-8">
-      <!-- Header -->
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold">Order Dashboard</h1>
-        <div class="flex items-center gap-2">
-          <span class="text-sm text-gray-500">Linda W.</span>
-          <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
-        </div>
+  <div class="p-8 max-w-4xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold text-center">Om WomBat</h1>
+
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Formål</h2>
+      <p class="text-gray-700 leading-relaxed">
+        WomBat integrerer Google Sheets med en MongoDB-backend og
+en Google Ads API, så du kan oprette og administrere kampagne-data
+på ét sted. Platformen gør det nemt at synkronisere data til og fra
+dine ark samt udrulle ændringer direkte til Google Ads via batch-opkald.
+      </p>
+    </section>
+
+    <section class="grid gap-6 md:grid-cols-2">
+      <div class="bg-white p-6 rounded-2xl shadow-sm">
+        <h3 class="text-xl font-medium mb-2">Hovedfunktioner</h3>
+        <ul class="list-disc list-inside text-gray-600 space-y-1">
+          <li>✅ Opret, hent, opdater og slet Google Sheets</li>
+          <li>🔄 Synkroniser kampagner, annoncer & søgeord</li>
+          <li>🚀 Push ressourcer til Google Ads API</li>
+          <li>📊 Interaktiv dokumentation via Swagger UI</li>
+        </ul>
       </div>
-  
-      <!-- Filters -->
-      <div class="bg-white shadow-md rounded-2xl p-4 mb-4 flex flex-wrap gap-4 items-center">
-        <input type="text" placeholder="Search for order" class="flex-1 px-4 py-2 bg-gray-100 rounded-full focus:outline-none" />
-        <select class="px-4 py-2 bg-gray-100 rounded-full text-sm">
-          <option>Completed</option>
-          <option>Pending</option>
-          <option>Cancelled</option>
-        </select>
-        <select class="px-4 py-2 bg-gray-100 rounded-full text-sm">
-          <option>Paid</option>
-          <option>Unpaid</option>
-        </select>
-        <input type="date" class="px-4 py-2 bg-gray-100 rounded-full text-sm" />
-        <input type="date" class="px-4 py-2 bg-gray-100 rounded-full text-sm" />
+      <div class="bg-white p-6 rounded-2xl shadow-sm">
+        <h3 class="text-xl font-medium mb-2">Teknologi-stack</h3>
+        <ul class="list-disc list-inside text-gray-600 space-y-1">
+          <li>Node.js, Express & Mongoose</li>
+          <li>Vue 3, Pinia & Vite</li>
+          <li>Google APIs: Sheets, Drive, Ads</li>
+          <li>JWT + OAuth 2.0 for sikkerhed</li>
+        </ul>
       </div>
-  
-      <!-- Orders Table -->
-      <div class="bg-white shadow-lg rounded-2xl overflow-hidden">
-        <table class="w-full text-left text-sm">
-          <thead class="bg-[#f9fafc] text-gray-500 uppercase">
-            <tr>
-              <th class="py-3 px-4">Order</th>
-              <th class="py-3 px-4">Items</th>
-              <th class="py-3 px-4">Status</th>
-              <th class="py-3 px-4">Payment</th>
-              <th class="py-3 px-4">Cost</th>
-              <th class="py-3 px-4">Total</th>
-              <th class="py-3 px-4">Balance</th>
-              <th class="py-3 px-4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-t hover:bg-gray-50">
-              <td class="py-3 px-4 font-medium">#B2039JW</td>
-              <td class="py-3 px-4">Beam Wide Flange (W) - CS</td>
-              <td class="py-3 px-4">
-                <span class="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">Pending Approval</span>
-              </td>
-              <td class="py-3 px-4">Credit Card</td>
-              <td class="py-3 px-4">$12,249</td>
-              <td class="py-3 px-4">$12,249</td>
-              <td class="py-3 px-4">$0</td>
-              <td class="py-3 px-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm">View</button>
-              </td>
-            </tr>
-            <tr class="border-t hover:bg-gray-50">
-              <td class="py-3 px-4 font-medium">#AW6UJIE</td>
-              <td class="py-3 px-4">Beam Wide Flange (W) - CS</td>
-              <td class="py-3 px-4">
-                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-700">Delivered</span>
-              </td>
-              <td class="py-3 px-4">Credit Card</td>
-              <td class="py-3 px-4">$12,249</td>
-              <td class="py-3 px-4">$12,249</td>
-              <td class="py-3 px-4">$0</td>
-              <td class="py-3 px-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm">View</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  // Add props or logic if needed
-  </script>
-  
-  <style scoped>
-  /* Optional: Add soft shadows, animations or transitions */
-  </style>
-  
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Opsætning</h2>
+      <ol class="list-decimal list-inside text-gray-700 space-y-2">
+        <li>Opret et projekt i Google Cloud Console og aktiver Sheets, Drive & Ads-API’er.</li>
+        <li>Konfigurer OAuth 2.0 credentials med korrekt redirect URI.</li>
+        <li>Indsæt CLIENT_ID, CLIENT_SECRET og developerKey i din <code>.env</code>:</li>
+      </ol>
+      <pre class="bg-gray-100 p-4 rounded"><code>
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_DEVELOPER_KEY=...
+MONGODB_URI=...
+JWT_SECRET=...
+ALLOWED_ORIGINS=
+      </code></pre>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-2xl font-semibold">Deployment</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Byg frontend med <code>npm run build</code> og deploy på Netlify/Vercel.
+        Kør backend på Render/Heroku med miljøvariable sat.
+      </p>
+    </section>
+
+    <footer class="text-center text-gray-500 text-sm">
+      <p>&copy; 2025 MDB REST – udviklet af Nanna Jessen</p>
+    </footer>
+  </div>
+</template>
+
+<script setup lang="ts">
+// Ingen særskilt logik endnu – kun statisk indhold
+</script>
+
+<style scoped>
+/* Eventuelle justeringer for themes eller custom styles */
+</style>

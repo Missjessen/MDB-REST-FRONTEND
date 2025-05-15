@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null as IUser | null,
     token: localStorage.getItem('auth-token') || '',
-    accessToken: '' as string // ← til fx Google Picker
+    accessToken: '' as string 
   }),
 
   getters: {

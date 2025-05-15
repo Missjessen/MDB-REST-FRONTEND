@@ -9,7 +9,7 @@ export class AuthGuard implements IAuthGuard {
    * og returnerer om vi er logget ind. 
    */
   public async ensureAuth(): Promise<boolean> {
-    const auth = useAuthStore()      // ← først her er Pinia aktiv
+    const auth = useAuthStore()   
 
     // Hvis vi har en token men ingen bruger, så hent brugerinfo
     if (auth.token && !auth.user) {
@@ -21,11 +21,9 @@ export class AuthGuard implements IAuthGuard {
       }
     }
 
-    // Returnér om brugeren nu er logget ind
     return !!auth.user && auth.isLoggedIn
   }
 
-  /** Omdirigerer til login‐route */
   public redirectToLogin(): void {
     router.replace('/login')
   }

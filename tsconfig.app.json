@@ -13,5 +13,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": [
+    "node_modules",
+    // ekskluder gamle eller moved .vue-filer:
+    "src/components/HelloWorld.vue",
+    "src/modules/sheets/pages/AboutPage.vue"
+  ]
 }

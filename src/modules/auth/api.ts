@@ -14,5 +14,5 @@ export const authApi = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  withCredentials: true // kun hvis nødvendigt til cookies
+  withCredentials: true 
 })

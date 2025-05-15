@@ -75,7 +75,7 @@ export const useSheetsStore = defineStore('sheets', {
               ) {
                 resolve({
                   id:   doc.id,
-                  name: doc.name    // TS ved nu at doc.name er string
+                  name: doc.name    
                 })
               } else {
                 resolve(null)

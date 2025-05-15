@@ -17,7 +17,7 @@ export class GooglePickerService {
     })
   }
 
-  // Loader identity client (kun nødvendigt hvis du senere vil forny token manuelt)
+  //kun nødvendigt hvis senere forny token manuelt
   public async initIdentityClient(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window.google?.accounts?.oauth2) return resolve()
@@ -30,7 +30,6 @@ export class GooglePickerService {
     })
   }
 
-  // Ny metode – giver adgangstoken fra login
   public setAccessToken(token: string) {
     this.accessToken = token
   }
@@ -53,7 +52,7 @@ export class GooglePickerService {
       .setCallback((data: any) => {
         if (data.action === google.picker.Action.PICKED) {
           const doc = data.docs?.[0]
-          if (doc) alert(`Du valgte: ${doc.name}`) // ← her kan du sende sheetId til din store
+          if (doc) alert(`Du valgte: ${doc.name}`) 
         }
       })
       .build()
